@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -280,13 +280,13 @@
     </div>
 
     <div class="platform-name">Windows</div>
-    <div class="file-meta">think-setup-1.0.0.exe &nbsp;·&nbsp; 64-bit &nbsp;·&nbsp; Windows 10 / 11</div>
+    <div class="file-meta">Think.Setup.1.0.0.exe &nbsp;·&nbsp; 64-bit &nbsp;·&nbsp; Windows 10 / 11</div>
 
     <button class="btn-download" id="dlBtn" onclick="startDownload()">
       <svg viewBox="0 0 24 24"><path d="M12 2a1 1 0 011 1v12.586l3.293-3.293a1 1 0 011.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 011.414-1.414L11 15.586V3a1 1 0 011-1zM4 20a1 1 0 011-1h14a1 1 0 110 2H5a1 1 0 01-1-1z"/></svg>
       <div>
         <span class="btn-label">Download for Windows</span>
-        <span class="btn-sub">think-setup-1.0.0.exe</span>
+        <span class="btn-sub">Think.Setup.1.0.0.exe</span>
       </div>
     </button>
 
@@ -323,6 +323,7 @@
 </div>
 
 <script>
+const DOWNLOAD_URL = 'https://github.com/harshqs/Think/releases/download/v1.0.0/Think.Setup.1.0.0.exe';
 function startDownload() {
   const btn = document.getElementById('dlBtn');
   const bar = document.getElementById('progressBar');
@@ -331,6 +332,7 @@ function startDownload() {
   btn.style.opacity = '0.5';
   btn.style.pointerEvents = 'none';
   bar.style.display = 'block';
+  window.location.href = DOWNLOAD_URL;
   let w = 0;
   const iv = setInterval(() => {
     w += Math.random() * 14 + 5;
@@ -351,3 +353,4 @@ function startDownload() {
 
 </body>
 </html>
+
