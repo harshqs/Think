@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 8% 4%;
+  --foreground: 0 0% 98%;
+  --card: 240 7% 6%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 7% 6%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 166 72% 50%;
+  --primary-foreground: 240 8% 4%;
+  --secondary: 240 6% 12%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 240 6% 11%;
+  --muted-foreground: 240 4% 68%;
+  --accent: 282 87% 62%;
+  --accent-foreground: 240 8% 4%;
+  --destructive: 0 84% 52%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 6% 16%;
+  --input: 240 6% 14%;
+  --ring: 166 72% 50%;
+  --radius: 16px;
+}
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: clip;
+  overflow-y: auto;
+}
+
+body {
+  min-height: 100%;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "ss01" 1, "ss02" 1, "cv01" 1;
+  width: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
+  text-rendering: geometricPrecision;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.25);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='210' height='210'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='210' height='210' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.04) 1px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0) 6px
+  );
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+}
+
+.glow-ring {
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  background: radial-gradient(circle at 35% 20%, rgba(34, 211, 238, 0.22), transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(168, 85, 247, 0.16), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.16), transparent 55%);
+  filter: blur(26px);
+  opacity: 0.9;
+}
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch::before {
+  transform: translate3d(2px, 0, 0);
+  color: rgba(34, 211, 238, 0.75);
+  mix-blend-mode: screen;
+  clip-path: polygon(0 2%, 100% 2%, 100% 30%, 0 30%);
+  opacity: 0.9;
+  animation: glitch-shift 1.25s steps(2, end) infinite;
+}
+
+.glitch::after {
+  transform: translate3d(-2px, 0, 0);
+  color: rgba(168, 85, 247, 0.75);
+  mix-blend-mode: screen;
+  clip-path: polygon(0 65%, 100% 65%, 100% 98%, 0 98%);
+  opacity: 0.8;
+  animation: glitch-shift 1.6s steps(2, end) infinite;
+}
+
+.border-glow {
+  position: relative;
+}
+
+.border-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 20% 15%, rgba(34, 211, 238, 0.55), transparent 40%),
+    radial-gradient(circle at 78% 40%, rgba(168, 85, 247, 0.45), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.25), transparent 52%);
+  opacity: 0.6;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 10px;
+  animation: marquee 18s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .scanlines,
+  .grain {
+    opacity: 0.06;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    animation: none;
+  }
+
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
+
+@keyframes glitch-shift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  40% {
+    transform: translate3d(2px, 0, 0);
+  }
+  60% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  80% {
+    transform: translate3d(1px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
