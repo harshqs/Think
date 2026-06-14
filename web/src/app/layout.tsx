@@ -18,9 +18,9 @@ const bodyFont = Spline_Sans_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Think — Nexus Chat 3D",
+  title: "Think - Premium Real-Time Chat",
   description:
-    "A premium, cinematic chat experience with a horror-3D aesthetic: friends, 1:1 and group chats, stories, and voice calling."
+    "A premium real-time chat app for web, desktop, and Android with groups, media, stories, themes, and voice messaging."
 }
 
 export default function RootLayout({

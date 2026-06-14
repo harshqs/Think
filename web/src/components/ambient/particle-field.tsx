@@ -23,9 +23,11 @@ export function ParticleField({ className }: { className?: string }) {
   React.useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
+    const activeCanvas = canvas
 
     const ctx = canvas.getContext("2d")
     if (!ctx) return
+    const activeCtx = ctx
 
     let raf = 0
     let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1))
@@ -39,11 +41,11 @@ export function ParticleField({ className }: { className?: string }) {
     function resize() {
       dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1))
       const { innerWidth: w, innerHeight: h } = window
-      canvas.width = Math.floor(w * dpr)
-      canvas.height = Math.floor(h * dpr)
-      canvas.style.width = `${w}px`
-      canvas.style.height = `${h}px`
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      activeCanvas.width = Math.floor(w * dpr)
+      activeCanvas.height = Math.floor(h * dpr)
+      activeCanvas.style.width = `${w}px`
+      activeCanvas.style.height = `${h}px`
+      activeCtx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
       const density = Math.round((w * h) / 38000)
       const mobile = w < 640
@@ -75,8 +77,8 @@ export function ParticleField({ className }: { className?: string }) {
       const w = window.innerWidth
       const h = window.innerHeight
 
-      ctx.clearRect(0, 0, w, h)
-      ctx.globalCompositeOperation = "lighter"
+      activeCtx.clearRect(0, 0, w, h)
+      activeCtx.globalCompositeOperation = "lighter"
 
       for (const p of particles) {
         p.x += p.vx
@@ -98,24 +100,24 @@ export function ParticleField({ className }: { className?: string }) {
             if (d > connectDist) continue
 
             const alpha = (1 - d / connectDist) * 0.14
-            ctx.strokeStyle = `hsla(${a.hue}, 85%, 60%, ${alpha})`
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            ctx.moveTo(a.x, a.y)
-            ctx.lineTo(b.x, b.y)
-            ctx.stroke()
+            activeCtx.strokeStyle = `hsla(${a.hue}, 85%, 60%, ${alpha})`
+            activeCtx.lineWidth = 1
+            activeCtx.beginPath()
+            activeCtx.moveTo(a.x, a.y)
+            activeCtx.lineTo(b.x, b.y)
+            activeCtx.stroke()
           }
         }
       }
 
       for (const p of particles) {
-        ctx.fillStyle = `hsla(${p.hue}, 85%, 60%, 0.35)`
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fill()
+        activeCtx.fillStyle = `hsla(${p.hue}, 85%, 60%, 0.35)`
+        activeCtx.beginPath()
+        activeCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        activeCtx.fill()
       }
 
-      ctx.globalCompositeOperation = "source-over"
+      activeCtx.globalCompositeOperation = "source-over"
       raf = window.requestAnimationFrame(frame)
     }
 
